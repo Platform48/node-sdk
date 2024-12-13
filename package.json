@@ -1,0 +1,135 @@
+{
+  "name": "jellyfaas",
+  "version": "1.0.0",
+  "description": "JellyFaaS SDK",
+  "keywords": [],
+  "types": "types/index.d.ts",
+  "main": "lib/index.js",
+  "files": [
+    "src/",
+    "lib/",
+    "types/",
+    "!**/__tests__"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/platform48/node-sdk"
+  },
+  "author": "Platform48 <caleb@platform48.com> (https://github.com/platform48/)",
+  "scripts": {
+    "lint": "eslint --ext .tsx,.ts,.js .",
+    "typescript": "tsc --noEmit",
+    "test": "jest",
+    "prebuild": "del-cli lib types",
+    "babel": "babel src --out-dir lib --extensions '.tsx,.ts,.js' --ignore '**/__tests__/**' --source-maps --delete-dir-on-start",
+    "declarations": "tsc --declaration --emitDeclarationOnly --outDir types",
+    "build": "yarn babel && yarn declarations",
+    "prepare": "yarn build",
+    "release": "release-it"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "dependencies": {
+    "core-js": "^3.6.5"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.10.1",
+    "@babel/core": "^7.10.2",
+    "@babel/preset-env": "^7.26.0",
+    "@babel/preset-typescript": "^7.26.0",
+    "@commitlint/config-conventional": "^8.3.4",
+    "@release-it/conventional-changelog": "^1.1.4",
+    "@types/jest": "^26.0.0",
+    "@types/node": "^22.10.1",
+    "@typescript-eslint/eslint-plugin": "^8.17.0",
+    "@typescript-eslint/parser": "^8.17.0",
+    "codecov": "^3.7.0",
+    "commitlint": "^8.3.5",
+    "del-cli": "^3.0.1",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-jest": "^28.9.0",
+    "husky": "^4.2.5",
+    "jest": "^26.0.1",
+    "prettier": "^2.0.5",
+    "release-it": "^13.6.2",
+    "typescript": "^5.7.2"
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+      "pre-commit": "yarn lint && yarn typescript && yarn test"
+    }
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "release-it": {
+    "git": {
+      "commitMessage": "chore: release ${version}",
+      "tagName": "v${version}"
+    },
+    "npm": {
+      "publish": true
+    },
+    "github": {
+      "release": true
+    },
+    "plugins": {
+      "@release-it/conventional-changelog": {
+        "preset": "angular"
+      }
+    }
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "modulePathIgnorePatterns": [
+      "<rootDir>/types/",
+      "<rootDir>/lib/"
+    ],
+    "testRegex": "/__tests__/.*\\.(test|spec)\\.(js|tsx?)$"
+  },
+  "eslintConfig": {
+    "env": {
+      "node": true,
+      "es2021": true,
+      "jest": true
+    },
+    "extends": [
+      "eslint:recommended",
+      "plugin:@typescript-eslint/recommended",
+      "prettier"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "plugins": [
+      "@typescript-eslint"
+    ]
+  },
+  "eslintIgnore": [
+    "node_modules/",
+    "coverage/",
+    "lib/"
+  ],
+  "prettier": {
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "es5",
+    "useTabs": false
+  },
+  "browserslist": [
+    ">1%",
+    "last 2 chrome versions",
+    "last 2 edge versions",
+    "last 2 firefox versions",
+    "last 2 safari versions",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all",
+    "not android <= 4.4",
+    "not samsung <= 4"
+  ]
+}
